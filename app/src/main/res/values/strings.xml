@@ -4,4 +4,5 @@
     <string name="players">PLAYERS</string>
     <string name="average_age">AVERAGE AGE</string>
     <string name="black_background_for_the_team_icon">team_icon_description</string>
+    <string name="player_image">player image</string>
 </resources>
