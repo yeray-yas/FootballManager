@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yerayyas.footballmanager.R
+import com.yerayyas.footballmanager.adapter.TeamAdapter
 import com.yerayyas.footballmanager.databinding.ActivityMainBinding
 import com.yerayyas.footballmanager.model.Model
 import com.yerayyas.footballmanager.model.Player
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var mRecyclerView: RecyclerView
-    mAdapter = TeamAdapter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
