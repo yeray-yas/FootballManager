@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">FootballManager</string>
+    <string name="app_name">RetrofitCrashCourse</string>
+    <string name="info">INFO</string>
+    <string name="players">PLAYERS</string>
+    <string name="average_age">AVERAGE AGE</string>
+    <string name="black_background_for_the_team_icon">team_icon_description</string>
 </resources>
