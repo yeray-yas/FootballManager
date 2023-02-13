@@ -20,6 +20,7 @@ import retrofit2.Response
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
+        //Progress bar
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Please, wait while data is fetch")
         progressDialog.show()
@@ -54,9 +56,12 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.d("response", "Getting response from server: " + response);
                     with(binding) {
-                        tvTitle.text = response.body()?.team?.name.toString().capitalize()
-                        tvName.text = response.body()?.team?.name.toString().capitalize()
-                        tvCountry.text = response.body()?.team?.country.toString().capitalize()
+                        tvTitle.text = response.body()?.team?.name.toString()
+                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } //capitalized
+                        tvName.text = response.body()?.team?.name.toString()
+                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                        tvCountry.text = response.body()?.team?.country.toString()
+                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                         tvNumberOfPlayers.text = response.body()?.team?.players?.size.toString()
                     }
 
@@ -81,8 +86,6 @@ class MainActivity : AppCompatActivity() {
                         now = LocalDate.now()
                         period = Period.between(birthDay, now)
                         totalYears += period.years
-
-
                     }
 
                     //we put the average age into its place
