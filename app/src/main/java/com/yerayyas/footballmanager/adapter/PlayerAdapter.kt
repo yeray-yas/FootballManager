@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.yerayyas.footballmanager.R
 import com.yerayyas.footballmanager.model.Player
 
-class TeamAdapter(players: List<Player>, applicationContext: Context) : RecyclerView.Adapter<TeamAdapter.ViewHolder>() {
+class PlayerAdapter(players: List<Player>, applicationContext: Context) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
     var players: List<Player> = ArrayList()
     private lateinit var context: Context

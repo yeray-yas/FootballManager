@@ -8,12 +8,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.yerayyas.footballmanager.R
-import com.yerayyas.footballmanager.adapter.TeamAdapter
+import com.yerayyas.footballmanager.adapter.PlayerAdapter
 import com.yerayyas.footballmanager.databinding.ActivityMainBinding
 import com.yerayyas.footballmanager.model.Model
 import com.yerayyas.footballmanager.model.Player
-import com.yerayyas.footballmanager.network.RetrofitInstance
+import com.yerayyas.footballmanager.network.PlayerClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         progressDialog.setMessage("Please, wait while data is fetch")
         progressDialog.show()
 
-        RetrofitInstance.apiInterface.getData().enqueue(object : Callback<Model?> {
+        PlayerClient.apiInterface.getData().enqueue(object : Callback<Model?> {
             override fun onResponse(call: Call<Model?>, response: Response<Model?>) {
                 if (response.isSuccessful) {
                     Log.d("response", "Getting response from server: " + response);
@@ -97,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
 
                     val players: List<Player>? = response.body()?.team?.players
-                    var mAdapter = players?.let { TeamAdapter(it, applicationContext) }
+                    var mAdapter = players?.let { PlayerAdapter(it, applicationContext) }
                     mRecyclerView.adapter = mAdapter
                     Toast.makeText(this@MainActivity, "Success Response", Toast.LENGTH_LONG).show()
 

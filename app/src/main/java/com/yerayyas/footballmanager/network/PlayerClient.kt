@@ -3,7 +3,7 @@ package com.yerayyas.footballmanager.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitInstance {
+object PlayerClient {
 
     private val retrofit by lazy {
         Retrofit.Builder()
@@ -13,6 +13,6 @@ object RetrofitInstance {
     }
 
     val apiInterface by lazy{
-        retrofit.create(ApiTeam::class.java)
+        retrofit.create(PlayerService::class.java)
     }
 }
