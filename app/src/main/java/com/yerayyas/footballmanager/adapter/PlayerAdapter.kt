@@ -39,8 +39,9 @@ class PlayerAdapter(
         fun bind(player: Player) {
             val name = player.name
             val lastName = player.lastname
-            binding.tvPlayerFullName.text = "$name " + " " + "$lastName"
-            binding.tvPlayerPosition.text = player.position.capitalize(Locale.getDefault())
+            "$name  $lastName".also { binding.tvPlayerFullName.text = it }
+            binding.tvPlayerPosition.text = player.position
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } //capitalized
             Glide.with(binding.root.context)
                 .load(player.photo)
                 .into(binding.ivPlayer)

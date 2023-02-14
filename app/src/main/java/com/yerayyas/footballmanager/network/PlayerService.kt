@@ -7,5 +7,5 @@ import retrofit2.http.GET
 interface PlayerService {
 
     @GET("teams.json")
-    fun getData(): Call<Model>
+    fun listPlayers(): Call<Model>
 }
