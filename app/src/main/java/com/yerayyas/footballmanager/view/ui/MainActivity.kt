@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
                 if (body != null)
                     playerAdapter.players = body.team.players
-                playerAdapter.run { this.notifyDataSetChanged() }
+                playerAdapter.run { notifyDataSetChanged() }
 
             }
         }
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                     lateinit var period: Period
                     val totalPlayers = response.body()?.team?.players?.size!!
 
-                    for (i in 0 until response.body()?.team?.players?.size!!) {
+                    for (i in 0 until totalPlayers) {
                         val birthDay = LocalDate.parse(
                             response.body()?.team?.players?.get(i)?.birthday.toString(),
                             dtf
