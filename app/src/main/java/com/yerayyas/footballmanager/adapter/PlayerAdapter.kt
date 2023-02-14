@@ -1,52 +1,49 @@
 package com.yerayyas.footballmanager.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.yerayyas.footballmanager.R
+import com.yerayyas.footballmanager.databinding.ItemTeamBinding
 import com.yerayyas.footballmanager.model.Player
+import java.util.*
 
-class PlayerAdapter(players: List<Player>, applicationContext: Context) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
+class PlayerAdapter(
+    var players: List<Player>,
+    private val movieClickedListener: (Player) -> Unit
+) :
 
-    var players: List<Player> = ArrayList()
-    private lateinit var context: Context
-
-
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = players[position]
-        holder.bind(item, context)
-        Glide.with(context).load(players[position].photo).into(holder.playerPhoto)
-    }
+    RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_team, parent, false)
-        return ViewHolder(layoutInflater)
+        val binding = ItemTeamBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
+        return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return players.size
-    }
-
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        private val playerName = view.findViewById(R.id.tvName) as TextView
-        val playerPhoto = view.findViewById(R.id.ivPlayer) as ImageView
-
-        fun bind(player: Player, context: Context) {
-            playerName.text = player.name
-            playerPhoto.loadUrl(player.photo)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val player = players[position]
+        holder.bind(player)
+        holder.itemView.setOnClickListener {
+            movieClickedListener(player)
         }
+    }
 
-        fun ImageView.loadUrl(url: String) {
-            Glide.with(context).load(url).into(this)
+    override fun getItemCount(): Int = players.size
+
+
+    class ViewHolder(private val binding: ItemTeamBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(player: Player) {
+            val name = player.name
+            val lastName = player.lastname
+            binding.tvPlayerFullName.text = "$name " + " " + "$lastName"
+            binding.tvPlayerPosition.text = player.position.capitalize(Locale.getDefault())
+            Glide.with(binding.root.context)
+                .load(player.photo)
+                .into(binding.ivPlayer)
         }
 
     }
