@@ -58,10 +58,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateTo(player: Player) {
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.PLAYER_NAME, player.name)
-        intent.putExtra(DetailActivity.PLAYER_LAST_NAME, player.lastname)
-        intent.putExtra(DetailActivity.PLAYER_POSITION, player.position)
-        intent.putExtra(DetailActivity.PLAYER_NUMBER, player.number)
+        intent.putExtra(DetailActivity.EXTRA_PLAYER, player)
+
         startActivity(intent)
     }
 

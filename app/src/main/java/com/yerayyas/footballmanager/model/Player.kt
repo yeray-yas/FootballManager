@@ -1,7 +1,10 @@
 package com.yerayyas.footballmanager.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Player(
     @SerializedName("birthday")
     val birthday: String,
@@ -21,5 +24,4 @@ data class Player(
     val rightFeet: Boolean,
     @SerializedName("weight")
     val weight: Int
-)
-
+) : Parcelable
