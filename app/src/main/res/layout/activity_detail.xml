@@ -14,6 +14,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <ImageView
+        android:id="@+id/ivTeamIcon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivPlayer"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="35dp"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clBody"
         android:layout_width="match_parent"
@@ -150,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:textSize="17sp"
-                android:text="Birthday data" />
+                tools:text="Birthday data" />
 
             <TextView
                 android:id="@+id/agePlayer"
@@ -158,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:textSize="17sp"
-                android:text="Age data" />
+                tools:text="Age data" />
 
             <TextView
                 android:id="@+id/heightPlayer"
@@ -166,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:textSize="17sp"
-                android:text="Height data" />
+                tools:text="Height data" />
 
 
             <TextView
@@ -175,14 +183,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:textSize="17sp"
-                android:text="Weight data" />
+                tools:text="Weight data" />
 
             <TextView
                 android:id="@+id/feetPlayer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
-                android:text="Feet data" />
+                tools:text="Feet data" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
