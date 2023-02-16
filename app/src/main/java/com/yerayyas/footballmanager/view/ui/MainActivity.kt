@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.yerayyas.footballmanager.adapter.PlayerAdapter
 import com.yerayyas.footballmanager.databinding.ActivityMainBinding
 import com.yerayyas.footballmanager.model.Model
 import com.yerayyas.footballmanager.network.PlayerClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,24 +36,22 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         getData()
 
-        val playerAdapter = PlayerAdapter(emptyList()){ player ->
+        val playerAdapter = PlayerAdapter(emptyList()) { player ->
             Toast.makeText(this@MainActivity, player.name, Toast.LENGTH_SHORT).show()
         }
 
         binding.rvTeams.adapter = playerAdapter
 
-        thread{
+        lifecycleScope.launch {
             val popularPlayers = PlayerClient.apiInterface.listPlayers()
-            val body = popularPlayers.execute().body()
-
-            runOnUiThread {
-                if (body != null)
-                    playerAdapter.players = body.team.players
+            val body = withContext(Dispatchers.IO) {popularPlayers.execute().body()}
+            if (body != null){
+                playerAdapter.players = body.team.players
                 playerAdapter.run { notifyDataSetChanged() }
-
             }
-        }
 
+
+        }
     }
 
     private fun getData() {
@@ -63,10 +65,9 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.d("response", "Getting response from server: " + response)
                     with(binding) {
-                        tvTitle.text = response.body()?.team?.name.toString()
-                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } //capitalized
+
                         tvName.text = response.body()?.team?.name.toString()
-                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } //capitalized
                         tvCountry.text = response.body()?.team?.country.toString()
                             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                         tvNumberOfPlayers.text = response.body()?.team?.players?.size.toString()
