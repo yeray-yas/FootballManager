@@ -1,15 +1,18 @@
 package com.yerayyas.footballmanager.view.ui
 
 import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.yerayyas.footballmanager.DetailActivity
 import com.yerayyas.footballmanager.adapter.PlayerAdapter
 import com.yerayyas.footballmanager.databinding.ActivityMainBinding
 import com.yerayyas.footballmanager.model.Model
+import com.yerayyas.footballmanager.model.Player
 import com.yerayyas.footballmanager.network.PlayerClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +24,6 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,21 +39,30 @@ class MainActivity : AppCompatActivity() {
         getData()
 
         val playerAdapter = PlayerAdapter(emptyList()) { player ->
-            Toast.makeText(this@MainActivity, player.name, Toast.LENGTH_SHORT).show()
+            navigateTo(player)
         }
 
         binding.rvTeams.adapter = playerAdapter
 
         lifecycleScope.launch {
             val popularPlayers = PlayerClient.apiInterface.listPlayers()
-            val body = withContext(Dispatchers.IO) {popularPlayers.execute().body()}
-            if (body != null){
+            val body = withContext(Dispatchers.IO) { popularPlayers.execute().body() }
+            if (body != null) {
                 playerAdapter.players = body.team.players
                 playerAdapter.run { notifyDataSetChanged() }
             }
 
 
         }
+    }
+
+    private fun navigateTo(player: Player) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.PLAYER_NAME, player.name)
+        intent.putExtra(DetailActivity.PLAYER_LAST_NAME, player.lastname)
+        intent.putExtra(DetailActivity.PLAYER_POSITION, player.position)
+        intent.putExtra(DetailActivity.PLAYER_NUMBER, player.number)
+        startActivity(intent)
     }
 
     private fun getData() {
