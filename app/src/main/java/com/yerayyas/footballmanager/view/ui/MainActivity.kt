@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(DetailActivity.EXTRA_PLAYER, player)
 
+
         startActivity(intent)
     }
 
