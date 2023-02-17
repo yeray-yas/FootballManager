@@ -1,7 +1,9 @@
 package com.yerayyas.footballmanager
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.yerayyas.footballmanager.databinding.ActivityDetailBinding
@@ -25,12 +27,13 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityDetailBinding
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val player = intent.getParcelableExtra<Player>(EXTRA_PLAYER)
+        val player = intent.getParcelableExtra("EXTRA_PLAYER", Player::class.java)
 
 
         if (player != null) {
@@ -48,6 +51,8 @@ class DetailActivity : AppCompatActivity() {
             val period = Period.between(theBirthDay, now)
 
             val actualAge =  "${period.years} YEARS"
+
+            title = fullName
 
 
 
@@ -79,7 +84,7 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    fun getData(){
+    private fun getData(){
         PlayerClient.apiInterface.listPlayers().enqueue(object : Callback<Model?> {
             override fun onResponse(call: Call<Model?>, response: Response<Model?>) {
                 if (response.isSuccessful) {
