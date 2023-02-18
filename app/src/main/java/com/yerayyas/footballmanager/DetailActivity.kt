@@ -23,7 +23,7 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    private lateinit var binding:ActivityDetailBinding
+    private lateinit var binding: ActivityDetailBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +31,13 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val player = intent.getParcelableExtra<Player>(EXTRA_PLAYER)
+        fillPlayersDetails()
 
+
+    }
+
+    private fun fillPlayersDetails() {
+        val player = intent.getParcelableExtra<Player>(EXTRA_PLAYER)
 
         if (player != null) {
 
@@ -48,7 +53,7 @@ class DetailActivity : AppCompatActivity() {
 
             val period = Period.between(theBirthDay, now)
 
-            val actualAge =  "${period.years} YEARS"
+            val actualAge = "${period.years} YEARS"
 
             title = fullName
 
@@ -78,15 +83,14 @@ class DetailActivity : AppCompatActivity() {
 
             }
         }
-
-
     }
 
-    private fun insertIcon(){
+    private fun insertIcon() {
         PlayerClient.apiInterface.listPlayers().enqueue(object : Callback<Model?> {
             override fun onResponse(call: Call<Model?>, response: Response<Model?>) {
                 if (response.isSuccessful) {
-                    Glide.with(this@DetailActivity).load(response.body()?.team?.icon).into(binding.ivTeamIcon)
+                    Glide.with(this@DetailActivity).load(response.body()?.team?.icon)
+                        .into(binding.ivTeamIcon)
                 }
             }
 
