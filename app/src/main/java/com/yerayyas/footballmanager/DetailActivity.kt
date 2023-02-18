@@ -1,9 +1,7 @@
 package com.yerayyas.footballmanager
 
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.yerayyas.footballmanager.databinding.ActivityDetailBinding
@@ -27,13 +25,13 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityDetailBinding
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val player = intent.getParcelableExtra("EXTRA_PLAYER", Player::class.java)
+        val player = intent.getParcelableExtra<Player>(EXTRA_PLAYER)
 
 
         if (player != null) {
@@ -57,7 +55,7 @@ class DetailActivity : AppCompatActivity() {
 
 
             Glide.with(this).load(player.photo).into(binding.ivPlayer)
-            getData()
+            insertIcon()
 
             with(binding) {
 
@@ -84,7 +82,7 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    private fun getData(){
+    private fun insertIcon(){
         PlayerClient.apiInterface.listPlayers().enqueue(object : Callback<Model?> {
             override fun onResponse(call: Call<Model?>, response: Response<Model?>) {
                 if (response.isSuccessful) {
