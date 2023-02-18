@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         PlayerClient.apiInterface.listPlayers().enqueue(object : Callback<Model?> {
             override fun onResponse(call: Call<Model?>, response: Response<Model?>) {
                 if (response.isSuccessful) {
-                    Log.d("response", "Getting response from server: " + response)
+                    Log.d("response", "Getting response from server: $response")
                     with(binding) {
 
                         tvName.text = response.body()?.team?.name.toString()

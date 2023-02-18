@@ -16,6 +16,7 @@ import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+
 class DetailActivity : AppCompatActivity() {
 
     companion object {
@@ -24,7 +25,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +44,19 @@ class DetailActivity : AppCompatActivity() {
             val playerName = player.name
             val playerLastname = player.lastname
             val fullName = "$playerName $playerLastname"
-            val dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy")
-            val ptf = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH)
+            val dtfOriginal = DateTimeFormatter.ofPattern("MM-dd-yyyy")
+            val dtfFinal = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH)
             val now = LocalDate.now()
             val theBirthDay = LocalDate.parse(
-                player.birthday, dtf
+                player.birthday, dtfOriginal
             )
 
             val period = Period.between(theBirthDay, now)
 
             val actualAge = "${period.years} YEARS"
 
-            title = fullName
 
+            title = fullName
 
 
             Glide.with(this).load(player.photo).into(binding.ivPlayer)
@@ -78,7 +78,7 @@ class DetailActivity : AppCompatActivity() {
                     "RIGHT".also { feetPlayer.text = it }
                 } else "LEFT".also { feetPlayer.text = it }
 
-                birthdayPlayer.text = theBirthDay.format(ptf).uppercase()
+                birthdayPlayer.text = theBirthDay.format(dtfFinal).uppercase()
                 agePlayer.text = actualAge
 
             }
@@ -100,6 +100,4 @@ class DetailActivity : AppCompatActivity() {
 
         })
     }
-
-
 }
